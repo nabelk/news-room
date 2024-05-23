@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
-export function ListNews({ item }) {
+function ListNews({ item }) {
     return (
         <div className='mb-6 lg:mb-0'>
             <div className='relative h-full block rounded-lg bg-neutral-700'>
@@ -58,3 +58,5 @@ ListNews.propTypes = {
         title: PropTypes.string.isRequired,
     }).isRequired,
 };
+
+export default ListNews;

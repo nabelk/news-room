@@ -1,10 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
-import { ListNews } from './list-news';
+import { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import { fetchAPI } from '../api/api';
 import { Loading } from './loading';
 import { SearchContext } from './context/search/search-context';
 import { FiltersModal } from './filters-modal';
 import { FiltersContext } from './context/filters/filters-context';
+
+const ListNews = lazy(() => import('./list-news'));
 
 export function News() {
     const { searchValue, setSearchValue } = useContext(SearchContext);
@@ -22,7 +23,7 @@ export function News() {
     };
 
     function getUrl() {
-        const API_KEY = 'apiKey=212efdf66e99479297cd29ed8454303d';
+        const API_KEY = 'apiKey=2a190a5109ac413f96c33d61272fb3dc';
 
         let url = 'https://newsapi.org/v2/everything?';
 
@@ -53,7 +54,7 @@ export function News() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue, filtersValue]);
 
-    if (loading) return <Loading />;
+    if (loading) return <Loading w={20} h={20} />;
     if (error)
         return (
             <div className='container my-12 mx-auto px-3 md:px-6'>
@@ -71,9 +72,20 @@ export function News() {
                     <FiltersModal></FiltersModal>
                 </div>
                 <div className='grid gap-8 lg:grid-cols-3 xl:gap-x-12'>
-                    {newsItems.map((item, idx) => {
-                        return <ListNews key={idx} item={item} />;
-                    })}
+                    {newsItems.map((item, idx) => (
+                        <Suspense
+                            key={idx}
+                            fallback={
+                                <div className='mb-6 lg:mb-0'>
+                                    <div className='block rounded-lg bg-neutral-700 p-4'>
+                                        <Loading w={10} h={10} />
+                                    </div>
+                                </div>
+                            }
+                        >
+                            <ListNews item={item} />
+                        </Suspense>
+                    ))}
                 </div>
             </section>
         </div>
