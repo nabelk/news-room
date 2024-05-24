@@ -1,16 +1,10 @@
-import PropTypes from 'prop-types';
-
-export function Loading({ w, h }) {
+export function Loading() {
     return (
-        <div
-            className={
-                w === 20 ? 'text-center flex justify-center align-center h-[100vh] m-auto ' : ''
-            }
-        >
+        <div className='text-center flex justify-center align-center h-[100vh] m-auto '>
             <div role='status' className='m-auto '>
                 <svg
                     aria-hidden='true'
-                    className={`inline w-${w} h-${h} text-gray-200 animate-spin dark:text-gray-600 fill-yellow-500`}
+                    className='inline text-gray-200 animate-spin dark:text-gray-600 fill-yellow-500 w-20 h-20'
                     viewBox='0 0 100 101'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'
@@ -29,8 +23,3 @@ export function Loading({ w, h }) {
         </div>
     );
 }
-
-Loading.propTypes = {
-    w: PropTypes.number.isRequired,
-    h: PropTypes.number.isRequired,
-};
